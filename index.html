@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal de Formularios Municipales</title>
+<style>
+  :root{
+    --azul-profundo:#173964;
+    --azul-medio:#2c5c9e;
+    --azul-claro:#e8eff8;
+    --papel:#fbfaf7;
+    --tinta:#1c2733;
+    --tinta-suave:#5b6b7d;
+    --oro:#b3893e;
+    --linea:#d7e0ec;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  body{
+    font-family:'Georgia', 'Times New Roman', serif;
+    background:var(--papel);
+    color:var(--tinta);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ===== ENCABEZADO ===== */
+
+  header{
+    background:linear-gradient(180deg, var(--azul-profundo) 0%, var(--azul-medio) 100%);
+    color:#fff;
+    padding:64px 24px 88px;
+    text-align:center;
+    position:relative;
+  }
+
+  .sello{
+    width:76px;
+    height:76px;
+    margin:0 auto 22px;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,.55);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+  }
+
+  .sello::before{
+    content:"";
+    position:absolute;
+    inset:8px;
+    border:1px solid rgba(255,255,255,.35);
+    border-radius:50%;
+  }
+
+  .sello svg{
+    width:32px;
+    height:32px;
+    fill:none;
+    stroke:#fff;
+    stroke-width:1.4;
+  }
+
+  .eyebrow{
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    font-size:11px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:rgba(255,255,255,.72);
+    margin-bottom:14px;
+  }
+
+  h1{
+    font-size:clamp(28px, 4vw, 40px);
+    font-weight:400;
+    letter-spacing:.3px;
+    line-height:1.25;
+  }
+
+  header p{
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    max-width:480px;
+    margin:16px auto 0;
+    color:rgba(255,255,255,.82);
+    font-size:15px;
+    line-height:1.6;
+  }
+
+  /* ===== CONTENIDO ===== */
+
+  main{
+    max-width:880px;
+    margin:-48px auto 0;
+    padding:0 24px 80px;
+    position:relative;
+  }
+
+  .lista{
+    display:grid;
+    gap:18px;
+  }
+
+  .formulario-item{
+    background:#fff;
+    border:1px solid var(--linea);
+    border-radius:4px;
+    padding:26px 28px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    box-shadow:0 1px 3px rgba(23,57,100,.06);
+    transition:box-shadow .2s ease, transform .2s ease;
+  }
+
+  .formulario-item:hover{
+    box-shadow:0 8px 24px rgba(23,57,100,.10);
+    transform:translateY(-1px);
+  }
+
+  .formulario-info{
+    display:flex;
+    align-items:flex-start;
+    gap:16px;
+  }
+
+  .numero{
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    font-size:11px;
+    letter-spacing:1px;
+    color:var(--oro);
+    border:1px solid var(--oro);
+    border-radius:50%;
+    width:30px;
+    height:30px;
+    min-width:30px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:2px;
+  }
+
+  .formulario-texto h2{
+    font-size:18px;
+    font-weight:400;
+    color:var(--azul-profundo);
+    margin-bottom:4px;
+  }
+
+  .formulario-texto p{
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    font-size:13.5px;
+    color:var(--tinta-suave);
+    line-height:1.5;
+  }
+
+  .abrir{
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:.3px;
+    color:var(--azul-profundo);
+    text-decoration:none;
+    border:1px solid var(--azul-medio);
+    padding:10px 22px;
+    border-radius:2px;
+    white-space:nowrap;
+    transition:background .2s ease, color .2s ease;
+  }
+
+  .abrir:hover{
+    background:var(--azul-medio);
+    color:#fff;
+  }
+
+  .abrir:focus-visible, .formulario-item:focus-within{
+    outline:2px solid var(--oro);
+    outline-offset:2px;
+  }
+
+  /* ===== PIE ===== */
+
+  footer{
+    text-align:center;
+    padding:32px 24px 48px;
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    font-size:12px;
+    color:var(--tinta-suave);
+  }
+
+  footer .linea-pie{
+    width:40px;
+    height:1px;
+    background:var(--linea);
+    margin:0 auto 16px;
+  }
+
+  /* ===== RESPONSIVE ===== */
+
+  @media (max-width:560px){
+    header{padding:48px 20px 72px}
+    .formulario-item{
+      flex-direction:column;
+      align-items:flex-start;
+    }
+    .abrir{width:100%;text-align:center}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .formulario-item{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="sello" aria-hidden="true">
+    <svg viewBox="0 0 24 24"><path d="M12 2l7 3v6c0 5-3.2 8.5-7 11-3.8-2.5-7-6-7-11V5l7-3z"/></svg>
+  </div>
+  <div class="eyebrow">Municipalidad</div>
+  <h1>Portal de Formularios Municipales</h1>
+  <p>Accedé, completá y descargá tus formularios en formato PDF de manera simple y directa.</p>
+</header>
+
+<main>
+  <div class="lista">
+
+    <div class="formulario-item">
+      <div class="formulario-info">
+        <span class="numero" aria-hidden="true">1</span>
+        <div class="formulario-texto">
+          <h2>Autorización ARTI</h2>
+          <p>Formulario con logo institucional, listo para completar y exportar.</p>
+        </div>
+      </div>
+      <a class="abrir" href="autorizacion_arti_con_logo_y_pdf.html">Abrir</a>
+    </div>
+
+    <div class="formulario-item">
+      <div class="formulario-info">
+        <span class="numero" aria-hidden="true">2</span>
+        <div class="formulario-texto">
+          <h2>Baja Comercial</h2>
+          <p>Solicitud de baja de actividad comercial ante el municipio.</p>
+        </div>
+      </div>
+      <a class="abrir" href="index_baja_comercial_marco_sin_garabatos.html">Abrir</a>
+    </div>
+
+    <div class="formulario-item">
+      <div class="formulario-info">
+        <span class="numero" aria-hidden="true">3</span>
+        <div class="formulario-texto">
+          <h2>Constancia de No Inscripción Comercial</h2>
+          <p>Certificado oficial con marco ornamental, listo para firmar.</p>
+        </div>
+      </div>
+      <a class="abrir" href="index_certificado_ornamental.html">Abrir</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="linea-pie"></div>
+  Portal de Formularios Municipales
+</footer>
+
+</body>
+</html>
