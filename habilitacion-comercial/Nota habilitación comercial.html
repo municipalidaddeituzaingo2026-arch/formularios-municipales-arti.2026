@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nota de Habilitación Comercial</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #eeeeee;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #000;
+        }
+
+        /* CONTENEDOR */
+
+        .contenedor {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        /* HOJA A4 */
+
+        .hoja {
+            position: relative;
+            width: 210mm;
+            min-height: 297mm;
+            margin: auto;
+            padding: 22mm 22mm;
+
+            background: white;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,0.18);
+
+            border: 2px solid #333;
+        }
+
+        /* BORDE INTERIOR */
+
+        .hoja::before {
+            content: "";
+            position: absolute;
+
+            top: 7mm;
+            left: 7mm;
+            right: 7mm;
+            bottom: 7mm;
+
+            border: 1px solid #777;
+
+            pointer-events: none;
+        }
+
+        /* ESQUINAS DECORATIVAS */
+
+        .esquina {
+            position: absolute;
+            font-size: 20px;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        .esquina.superior-izquierda {
+            top: 4mm;
+            left: 4mm;
+        }
+
+        .esquina.superior-derecha {
+            top: 4mm;
+            right: 4mm;
+        }
+
+        .esquina.inferior-izquierda {
+            bottom: 4mm;
+            left: 4mm;
+        }
+
+        .esquina.inferior-derecha {
+            bottom: 4mm;
+            right: 4mm;
+        }
+
+        /* FECHA */
+
+        .fecha {
+            position: relative;
+            z-index: 3;
+
+            text-align: right;
+
+            margin-bottom: 35px;
+
+            line-height: 1.7;
+        }
+
+        .fecha input {
+            width: 55px;
+        }
+
+        .fecha .mes {
+            width: 115px;
+        }
+
+        .fecha .anio {
+            width: 65px;
+        }
+
+        /* CAMPOS */
+
+        input {
+            border: none;
+            border-bottom: 1px solid #000;
+
+            background: transparent;
+
+            outline: none;
+
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 15px;
+
+            padding: 2px 4px;
+        }
+
+        input:focus {
+            background: #f5f5f5;
+        }
+
+        /* DESTINATARIO */
+
+        .destinatario {
+            position: relative;
+            z-index: 3;
+
+            line-height: 1.6;
+
+            margin-bottom: 30px;
+        }
+
+        .destinatario strong {
+            display: block;
+        }
+
+        /* TEXTO */
+
+        .texto {
+            position: relative;
+            z-index: 3;
+
+            line-height: 1.7;
+
+            text-align: justify;
+
+            margin-bottom: 25px;
+        }
+
+        .texto strong {
+            font-weight: bold;
+        }
+
+        /* SANGRÍA ÚNICAMENTE PARA "ME DIRIJO A USTED" */
+
+        .sangria-4cm {
+            margin-left: 4cm;
+        }
+
+        /* DATOS */
+
+        .datos {
+            position: relative;
+            z-index: 3;
+
+            margin-top: 15px;
+
+            margin-bottom: 35px;
+        }
+
+        .campo {
+            display: flex;
+            align-items: baseline;
+
+            margin: 18px 0;
+
+            line-height: 1.5;
+        }
+
+        .campo label {
+            white-space: nowrap;
+        }
+
+        .campo input {
+            flex: 1;
+
+            margin-left: 8px;
+
+            min-width: 100px;
+        }
+
+        /* DESPEDIDA */
+
+        .despedida {
+            position: relative;
+            z-index: 3;
+
+            margin-top: 25px;
+
+            margin-bottom: 55px;
+
+            line-height: 1.6;
+        }
+
+        /* BLOQUE DE FIRMA */
+
+        .firma {
+            position: relative;
+            z-index: 3;
+
+            width: 55%;
+
+            margin-left: auto;
+
+            text-align: right;
+
+            line-height: 2;
+        }
+
+        .firma-linea {
+            width: 280px;
+
+            margin-left: auto;
+
+            border-bottom: 1px solid #000;
+
+            margin-bottom: 5px;
+        }
+
+        .firma input {
+            width: 230px;
+        }
+
+        /* BOTONES */
+
+        .botones {
+            text-align: center;
+
+            margin: 25px auto;
+        }
+
+        button {
+            padding: 13px 25px;
+
+            margin: 5px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-size: 16px;
+
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .btn-pdf {
+            background: #222;
+
+            color: white;
+        }
+
+        .btn-pdf:hover {
+            background: #444;
+        }
+
+        .btn-limpiar {
+            background: #d9d9d9;
+
+            color: #000;
+        }
+
+        .btn-limpiar:hover {
+            background: #c5c5c5;
+        }
+
+        /* CELULAR */
+
+        @media (max-width: 850px) {
+
+            body {
+                padding: 10px;
+            }
+
+            .hoja {
+                width: 100%;
+
+                min-height: auto;
+
+                padding: 55px 35px;
+            }
+
+            .campo {
+                display: block;
+            }
+
+            .campo input {
+                display: block;
+
+                width: 100%;
+
+                margin-left: 0;
+
+                margin-top: 5px;
+            }
+
+            .firma {
+                width: 100%;
+            }
+
+            .firma input {
+                width: 80%;
+            }
+
+            /* Mantener la sangría solicitada */
+            .sangria-4cm {
+                margin-left: 4cm;
+            }
+        }
+
+        /* IMPRESIÓN / PDF */
+
+@media print {
+
+    body {
+        margin: 0;
+        padding: 0;
+        background: white;
+    }
+
+    .contenedor {
+        width: 210mm;
+        margin: 0;
+        padding: 0;
+    }
+
+    .hoja {
+        width: 210mm;
+        height: 297mm;
+        min-height: 297mm;
+        margin: 0;
+        padding: 22mm 22mm;
+        box-shadow: none;
+        border: 2px solid #333;
+        overflow: hidden;
+    }
+
+    .botones {
+        display: none;
+    }
+
+    input {
+        background: transparent;
+    }
+}
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="contenedor">
+
+    <div class="hoja" id="nota">
+
+        <!-- DECORACIÓN DE LAS ESQUINAS -->
+
+        <div class="esquina superior-izquierda">✦</div>
+        <div class="esquina superior-derecha">✦</div>
+        <div class="esquina inferior-izquierda">✦</div>
+        <div class="esquina inferior-derecha">✦</div>
+
+
+        <!-- FECHA -->
+
+        <div class="fecha">
+
+            Ituzaingó, Ctes.
+
+            <input
+                type="text"
+                id="dia"
+                placeholder="día"
+            >
+
+            de
+
+            <input
+                type="text"
+                id="mes"
+                class="mes"
+                placeholder="mes"
+            >
+
+            de
+
+            <input
+                type="text"
+                id="anio"
+                class="anio"
+                placeholder="20..."
+            >
+
+        </div>
+
+
+        <!-- DESTINATARIO -->
+
+        <div class="destinatario">
+
+            <strong>SEÑOR</strong>
+
+            <strong>INTENDENTE MUNICIPAL</strong>
+
+            <strong>SR. EMILIO NICOLAS</strong>
+
+            <strong>S…………………………/……………………………D</strong>
+
+        </div>
+
+
+        <!-- TEXTO PRINCIPAL -->
+
+        <div class="texto sangria-4cm">
+
+            Me dirijo a usted, con el fin de solicitar la
+            <strong>HABILITACIÓN COMERCIAL</strong> correspondiente:
+
+        </div>
+
+
+        <!-- DATOS DEL COMERCIO -->
+
+        <div class="datos">
+
+            <div class="campo">
+
+                <label>
+                    • Denominación del Comercio:
+                </label>
+
+                <input
+                    type="text"
+                    id="denominacion"
+                    placeholder="Escriba aquí"
+                >
+
+            </div>
+
+
+            <div class="campo">
+
+                <label>
+                    • Rubro Principal:
+                </label>
+
+                <input
+                    type="text"
+                    id="rubro"
+                    placeholder="Escriba aquí"
+                >
+
+            </div>
+
+
+            <div class="campo">
+
+                <label>
+                    • Anexo:
+                </label>
+
+                <input
+                    type="text"
+                    id="anexo"
+                    placeholder="Escriba aquí"
+                >
+
+            </div>
+
+
+            <div class="campo">
+
+                <label>
+                    • Dirección Comercial:
+                </label>
+
+                <input
+                    type="text"
+                    id="direccion"
+                    placeholder="Escriba aquí"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- DESPEDIDA -->
+
+        <div class="despedida">
+
+            Sin otro particular, lo saludo atentamente.
+
+        </div>
+
+
+        <!-- FIRMA -->
+
+        <div class="firma">
+
+            <div class="firma-linea"></div>
+
+            <strong>Firma del Propietario.</strong>
+
+            <br>
+
+            <strong>Aclaración:</strong>
+
+            <input
+                type="text"
+                id="aclaracion"
+                placeholder="Escriba aquí"
+            >
+
+            <br>
+
+            <strong>D.N.I N°:</strong>
+
+            <input
+                type="text"
+                id="dni"
+                placeholder="Escriba aquí"
+            >
+
+            <br>
+
+            <strong>Teléfono:</strong>
+
+            <input
+                type="text"
+                id="telefono"
+                placeholder="Escriba aquí"
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- BOTONES -->
+
+    <div class="botones">
+
+        <button
+            class="btn-pdf"
+            onclick="descargarPDF()"
+        >
+            📄 Descargar PDF
+        </button>
+
+
+        <button
+            class="btn-limpiar"
+            onclick="limpiarFormulario()"
+        >
+            🗑 Limpiar
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- LIBRERÍA PARA GENERAR PDF -->
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
+</script>
+
+
+<script>
+
+function descargarPDF() {
+
+    const elemento = document.getElementById("nota");
+
+    const opciones = {
+
+        margin: 0,
+
+        filename: "Nota_Habilitacion_Comercial.pdf",
+
+        image: {
+            type: "jpeg",
+            quality: 1
+        },
+
+        html2canvas: {
+
+            scale: 3,
+
+            useCORS: true,
+
+            logging: false,
+
+            width: elemento.offsetWidth,
+
+            height: elemento.offsetHeight,
+
+            scrollX: 0,
+
+            scrollY: 0
+
+        },
+
+        jsPDF: {
+
+            unit: "mm",
+
+            format: "a4",
+
+            orientation: "portrait",
+
+            hotfixes: ["px_scaling"]
+
+        },
+
+        pagebreak: {
+            mode: ["avoid-all"]
+        }
+
+    };
+
+
+    html2pdf()
+        .set(opciones)
+        .from(elemento)
+        .toPdf()
+        .get("pdf")
+        .then(function(pdf) {
+
+            pdf.internal.pageSize.width = 210;
+            pdf.internal.pageSize.height = 297;
+
+        })
+        .save();
+}
+
+
+/* LIMPIAR TODOS LOS CAMPOS */
+
+function limpiarFormulario() {
+
+    const campos =
+        document.querySelectorAll("input");
+
+    campos.forEach(function(campo) {
+
+        campo.value = "";
+
+    });
+
+}
+
+</script>
+
+</body>
+
+</html>
