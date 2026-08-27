@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Memorándum Interno</title>
+<style>
+@page{size:A4;margin:0}*{box-sizing:border-box}body{margin:0;background:#eee;font-family:Arial,Helvetica,sans-serif;color:#111}.contenedor{width:210mm;min-height:297mm;margin:18px auto;padding:15mm;background:#fff}.hoja{position:relative;min-height:267mm;padding:18mm 17mm;background:#fff;border:2px solid #245A9C;box-shadow:0 0 0 4px #fff,0 0 0 6px #6FA8DC}.hoja:before{content:"";position:absolute;inset:7px;border:1px solid #6FA8DC;pointer-events:none}.contenido{position:relative;z-index:1;font-size:14px;line-height:1.65}.titulo{text-align:center;font-weight:bold;margin-bottom:25px}.campo{border:0;border-bottom:1px solid #333;outline:0;background:transparent;font:inherit;color:inherit;padding:1px 3px}.campo:focus{border-bottom:2px solid #245A9C}.parrafo{margin-top:18px;text-align:justify}.acciones{text-align:center;margin:25px auto}button{border:0;border-radius:5px;padding:11px 18px;margin:5px;cursor:pointer;font-size:14px;font-weight:bold}.guardar{background:#198754;color:#fff}.pdf{background:#245A9C;color:#fff}.limpiar{background:#dc3545;color:#fff}#mensaje{text-align:center;font-weight:bold;min-height:20px}@media print{body{background:#fff}.contenedor{width:210mm;min-height:297mm;margin:0;padding:15mm}.hoja{box-shadow:0 0 0 4px #fff,0 0 0 6px #6FA8DC;-webkit-print-color-adjust:exact;print-color-adjust:exact}.acciones,#mensaje{display:none}}
+
+  .fecha-memo {
+    margin-top: 28px !important;
+  }
+
+</style></head><body><div class="contenedor"><section class="hoja" id="nota"><div class="contenido">
+<div class="titulo">MUNICIPALIDAD DE ITUZANGÓ<br>MEMORÁNDUM INTERNO Nº <input class="campo" data-campo="numero" value="190" style="width:55px">
+     / <input class="campo" data-campo="anio_memo" value="2026" style="width:65px;">   </div>
+<p>FECHA: <input class="campo" data-campo="fecha" type="date" style="width:150px"></p>
+<p>PARA: <input class="campo" data-campo="para" value="DIRECCION DE CATASTRO: Dr. ORLANDO SANCHEZ" style="width:80%"></p>
+<p>DE: <input class="campo" data-campo="de" value="AGENCIA DE RECAUDACION TRIBUTARIA DE ITUZAINGO: GILBERTO JAIR R. GIMENEZ" style="width:80%"></p>
+<p class="parrafo">Por el presente, elevo Expediente <input class="campo" data-campo="expediente" value="748/2026"> de fecha <input class="campo" data-campo="fecha_expediente" value="15-07-2026"> del comercio “<input class="campo" data-campo="comercio" value="EL JESUITA">”, rubro “<input class="campo" data-campo="rubro" value="AGENCIA DE TURISMO">” anexo “<input class="campo" data-campo="anexo" value="SERVICIO DE TRANSPORTE DE PASAJEROS">” con dirección en <input class="campo" data-campo="direccion" value="PARANA N° 1533"> fin de emitir el respectivo informe catastral.</p>
+<p class="parrafo">Una vez cumplido, enviar a la Dirección de Planeamiento y Ordenamiento Urbano, para que notifique la superficie a computar según croquis.</p><p class="parrafo">Atentamente.</p>
+</div></section><div class="acciones"><button class="guardar" onclick="guardarCambios()">💾 GUARDAR CAMBIOS</button><button class="pdf" onclick="generarPDF()">📄 DESCARGAR PDF</button><button class="limpiar" onclick="limpiarDatos()">🗑 LIMPIAR</button></div><div id="mensaje"></div></div>
+<script>
+function guardarCambios(){const d={};document.querySelectorAll("[data-campo]").forEach(e=>d[e.dataset.campo]=e.value);localStorage.setItem("memoMunicipal",JSON.stringify(d));mostrarMensaje("✓ Datos guardados correctamente")}
+function cargarDatos(){const s=localStorage.getItem("memoMunicipal");if(!s)return;const d=JSON.parse(s);document.querySelectorAll("[data-campo]").forEach(e=>{if(d[e.dataset.campo]!==undefined)e.value=d[e.dataset.campo]})}
+function mostrarMensaje(t){const m=document.getElementById("mensaje");m.textContent=t;setTimeout(()=>m.textContent="",3000)}
+function generarPDF(){guardarCambios();window.print()}
+function limpiarDatos(){if(!confirm("¿Está seguro de que desea borrar todos los datos?"))return;localStorage.removeItem("memoMunicipal");document.querySelectorAll("[data-campo]").forEach(e=>e.value="");mostrarMensaje("✓ Datos eliminados")}
+window.addEventListener("DOMContentLoaded",cargarDatos);
+</script></body></html>
